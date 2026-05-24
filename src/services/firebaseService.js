@@ -1,17 +1,17 @@
 import {
   collection, doc, addDoc, updateDoc, deleteDoc,
-  getDocs, getDoc, query, where, orderBy, serverTimestamp,
+  getDocs, getDoc, query, where, serverTimestamp,
 } from 'firebase/firestore';
 import { db } from '../config/firebase';
 
 export const paymentsService = {
   async getAll(buildingId) {
-    const q = query(collection(db, 'payments'), where('buildingId', '==', buildingId), orderBy('dueDate', 'desc'));
+    const q = query(collection(db, 'payments'), where('buildingId', '==', buildingId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
   async getByUser(userId, buildingId) {
-    const q = query(collection(db, 'payments'), where('buildingId', '==', buildingId), where('userId', '==', userId), orderBy('dueDate', 'desc'));
+    const q = query(collection(db, 'payments'), where('buildingId', '==', buildingId), where('userId', '==', userId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
@@ -35,7 +35,7 @@ export const paymentsService = {
 
 export const announcementsService = {
   async getAll(buildingId) {
-    const q = query(collection(db, 'announcements'), where('buildingId', '==', buildingId), orderBy('createdAt', 'desc'));
+    const q = query(collection(db, 'announcements'), where('buildingId', '==', buildingId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
@@ -55,7 +55,7 @@ export const announcementsService = {
 
 export const vendorsService = {
   async getAll(buildingId) {
-    const q = query(collection(db, 'vendors'), where('buildingId', '==', buildingId), orderBy('name', 'asc'));
+    const q = query(collection(db, 'vendors'), where('buildingId', '==', buildingId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
@@ -72,7 +72,7 @@ export const vendorsService = {
 
 export const maintenanceService = {
   async getAll(buildingId) {
-    const q = query(collection(db, 'maintenance'), where('buildingId', '==', buildingId), orderBy('createdAt', 'desc'));
+    const q = query(collection(db, 'maintenance'), where('buildingId', '==', buildingId));
     const snap = await getDocs(q);
     return snap.docs.map(d => ({ id: d.id, ...d.data() }));
   },
